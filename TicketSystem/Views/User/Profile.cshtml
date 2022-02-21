@@ -1,0 +1,31 @@
+﻿@model UserShowVM
+
+<div>
+    <h4>User</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Account)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Account)
+        </dd>
+        <dt class="col-sm-2">
+            RoleName @*@Html.DisplayNameFor(model => model.RoleName)*@
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Role.Name)
+        </dd>
+    </dl>
+</div>
+@*<div>
+    <a asp-action="EditProfile" asp-route-id="@Model.Id">Edit</a>    
+</div>*@
+
+

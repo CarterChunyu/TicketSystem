@@ -1,0 +1,55 @@
+﻿@model ProblemShowVM
+
+<div>
+    <h4>Problems</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Summary)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Summary)
+        </dd>
+        <dt class="col-sm-2">
+            ProblemCategoryName@*@Html.DisplayNameFor(model => model.ProblemCategory.Name)*@
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProblemCategory.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.isSolved)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.isSolved)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Severity.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Severity.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Priority.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Priority.Name)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Index">To List</a>|
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a>|
+    <a asp-action="Delete" asp-route-id="@Model.Id">Delete</a>|
+    @if (!Model.isSolved)
+    {
+        <a asp-action="Resolve" asp-route-id="@Model.Id">Resolve</a>
+    }
+</div>
+
+

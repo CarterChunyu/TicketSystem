@@ -1,0 +1,44 @@
+﻿@model ProblemCreateVM
+
+
+<h4>Create Prbolems</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ProblemCategoryId" class="control-label"></label>
+                <select asp-for="ProblemCategoryId" class="form-control" asp-items="ViewBag.ProblemCategoryId"></select>
+                <span asp-validation-for="ProblemCategoryId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Summary" class="control-label"></label>
+                <input asp-for="Summary" class="form-control" />
+                <span asp-validation-for="Summary" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SeverityId" class="control-label"></label>
+                <select asp-for="SeverityId" class="form-control" asp-items="ViewBag.SeverityId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="PriorityId" class="control-label"></label>
+                <select asp-for="PriorityId" class="form-control" asp-items="ViewBag.PriorityId"></select>
+            </div>
+            <div class="form-group">
+                <a asp-action="Index">Cancel</a>|
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

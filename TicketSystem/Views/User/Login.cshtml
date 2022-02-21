@@ -1,0 +1,36 @@
+﻿@model UserLoginVM
+@{ 
+    Layout = "_LoginLayout";
+}
+@{
+    var returnUrl = Context.Request.Query["ReturnUrl"];
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-controller="User" asp-action="Login" method="post"
+              asp-route-returnUrl="@returnUrl">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <h4 class="text-danger">@Html.ValidationMessageFor(p => p.DenialReason)</h4>
+            <div class="form-group">
+                <label asp-for="Account" class="control-label"></label>
+                <input asp-for="Account" class="form-control" />
+                <span asp-validation-for="Account" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password" class="control-label"></label>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>           
+            <div class="form-group">
+                @*<a asp-controller="User" asp-action="Register">Register</a>|*@
+                <input type="submit" value="Login" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

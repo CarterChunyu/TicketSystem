@@ -1,0 +1,8 @@
+﻿{
+  "AuthorizeSetting": {
+    "Admin": "Admin",
+    "Qa": "Qa,Problem,P_Create,P_Edit,P_Delete,P_Solve",
+    "Rd": "Rd,Problem,P_Solve",
+    "Pm": "Pm,Problem,P_Create"
+  }
+}

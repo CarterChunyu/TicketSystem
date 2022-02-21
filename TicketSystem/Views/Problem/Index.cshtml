@@ -1,0 +1,191 @@
+﻿@model IEnumerable<ProblemShowVM>
+
+@{
+    int page = (int)ViewData["nowpage"];
+    int pages = int.Parse(ViewData["pages"].ToString());
+    int range = 2;
+
+    //int pbegin = page - 4 >= 1 ? page - 4 : 1;
+    //int pend = pbegin + 8 <= pages ? pbegin + 8 : pages;
+    int add = page + range - pages <= 0 ? 0 : page + range - pages;
+    int pbegin = page - range - add >= 1 ? page - range - add : 1;
+    int pend = pbegin + range * 2 <= pages ? pbegin + pbegin + range * 2 : pages;
+
+    IEnumerable<string> allcategorys = (IEnumerable<string>)ViewData["allcategorys"];
+    bool status = (bool)ViewData["status"];
+    string categoryname = (string)ViewData["categoryname"];
+
+}
+
+<div class="index">
+
+    <div class="index__filter">
+        <ul class="nav flex-column nav-pills">
+            @if (status)
+            {
+                <li class="nav-item">
+                    <a class="nav-link active bg-dark" aria-current="page" asp-controller="Problem"
+                       asp-action="Index" asp-route-page="1" asp-route-status="@true" asp-route-categoryname="@categoryname"
+                       >IsSolved</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-controller="Problem"
+                       asp-action="Index" asp-route-page="1" asp-route-status="@false" asp-route-categoryname="@categoryname"
+                       >To Be Solve</a>
+                </li>
+            }
+            else
+            {
+                <li class="nav-item">
+                    <a class="nav-link" asp-controller="Problem"
+                       asp-action="Index" asp-route-page="1" asp-route-status="@true" asp-route-categoryname="@categoryname">IsSolved</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active bg-dark" aria-current="page" asp-controller="Problem"
+                       asp-action="Index" asp-route-page="1" asp-route-status="@false" asp-route-categoryname="@categoryname">To Be Solve</a>
+                </li>
+            }
+
+        </ul>
+    </div>
+    <hr />
+    <div class="index__filter">
+        <ul class="nav flex-column nav-pills">
+            @foreach (string item in allcategorys)
+            {
+                if (item == categoryname)
+                {
+                    <li class="nav-item">
+                        <a class="nav-link active bg-dark" aria-current="page" asp-controller="Problem"
+                           asp-action="Index" asp-route-page="1" asp-route-status="@true" asp-route-categoryname="@item">@item</a>
+                    </li>
+                }
+                else
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Problem"
+                           asp-action="Index" asp-route-page="1" asp-route-status="@false" asp-route-categoryname="@item">@item</a>
+                    </li>
+                }
+            } 
+        </ul>
+    </div>
+    <hr />
+
+    <div class="index__content">
+
+        <table class="indexTable">
+            @*<caption>Problems</caption>*@
+            <thead>
+                <tr>
+                    @*<th>
+                            @Html.DisplayNameFor(p => p.Id)
+                        </th>*@
+                    <th>
+                        @Html.DisplayNameFor(p => p.Summary)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(p => p.ProblemCategory.Name)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(p => p.Description)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(p => p.isSolved)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(p => p.Severity.Name)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(p => p.Priority.Name)
+                    </th>
+                </tr>
+            </thead>
+            <tbody class="bg-white">
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        @*<td>
+                                @Html.DisplayFor(modelItem => item.Id)
+                            </td>*@
+                        <td>
+                            <a asp-action="Details" asp-route-id="@item.Id">@item.Summary</a>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ProblemCategory.Name)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Description)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.isSolved)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Severity.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Priority.Name)
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <nav aria-label="Page Navigation">
+            <ul class="pagination pagination-sm">
+                @if (page == 1)
+                {
+                    <li class="page-item disabled"><a class="page-link">Previous</a></li>
+                }
+                else
+                {
+                    int num = page - 1;
+                    <li class="page-item">
+                        <a class="page-link" asp-controller="Problem" asp-action="Index"
+                           asp-route-page="@num" asp-route-status="@status" asp-route-categoryname="@categoryname">Previous</a>
+                    </li>
+                }
+                @for (int i = pbegin; i <= pend; i++)
+                {
+                    if (page == i)
+                    {
+                        <li class="page-item active" aria-current="page">
+                            <a class="page-link" asp-controller="Problem" asp-action="Index"
+                               asp-route-page="@i" asp-route-status="@status" asp-route-categoryname="@categoryname">@i</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="page-item">
+                            <a class="page-link" asp-controller="Problem" asp-action="Index"
+                               asp-route-page="@i" asp-route-status="@status" asp-route-categoryname="@categoryname">@i</a>
+                        </li>
+                    }
+                }
+
+                @if (page == pages)
+                {
+                    <li class="page-item disabled"><a class="page-link">Next</a></li>
+                }
+                else
+                {
+                    int num = page + 1;
+                    <li class="page-item">
+                        <a class="page-link" asp-controller="Problem" asp-action="Index"
+                           asp-route-page="@num" asp-route-status="@status" asp-route-categoryname="@categoryname">Next</a>
+                    </li>
+                }
+            </ul>
+        </nav>
+
+        <div class="form-group row mt-5">
+            <div class="col">
+                <a asp-action="Create" class="btn btn-primary" role="button">New Problem</a>
+            </div>
+
+        </div><!-- /index__content -->
+
+    </div><!-- /index -->
+
+</div>
