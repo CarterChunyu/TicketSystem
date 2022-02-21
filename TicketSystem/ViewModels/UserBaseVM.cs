@@ -12,10 +12,9 @@ namespace TicketSystem.ViewModels
     {
         //public int Id { get; set; }
         //public string Name { get; set; }
-        [Required]
         public string Name { get; set; }
         [DataType(DataType.Password)]
-        [Required]
+
         public string Password { get; set; }
         public int RoleId { get; set; }
     }
@@ -27,7 +26,6 @@ namespace TicketSystem.ViewModels
     }
     public class UserEditVM : UserBaseVM
     {
-        [Required]
         public int Id { get; set; }
         [Required]
         public string Account { get; set; }
@@ -36,8 +34,10 @@ namespace TicketSystem.ViewModels
     {
         public Role Role { get; set; }
     }
-    public class UserLoginVM:UserEditVM
-    {        
+    public class UserLoginVM
+    {
+        public string Account { get; set; }
+        public string Password { get; set; }
         public string DenialReason { get; set; }
     }
     public class UserPasswordVM

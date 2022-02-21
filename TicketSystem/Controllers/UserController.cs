@@ -125,7 +125,7 @@ namespace TicketSystem.Controllers
                 // 取有Include Role 的User
                 User userRole = await _userService.GetUserByIdAsync(user.Id);
                 //todo... 直接登出
-                await _loginService.SignOutAsync();
+                //await _loginService.SignOutAsync();
                 //await _loginService.SetClaims(user.Name,userRole.Role.Name);
 
                 //LoginStateVM loginStateVM = _mapper.Map<User, LoginStateVM>(userRole);
@@ -136,6 +136,15 @@ namespace TicketSystem.Controllers
             ViewData["RoleId"] = new SelectList(_roleService.GetAllRoles(), "Id", "Name", userEditVM.RoleId);
             return View(userEditVM);
         }
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Details(int id)
+        {           
+            User user = await _userService.GetUserByIdAsync(id);
+            UserShowVM userShowVM = _mapper.Map<User, UserShowVM>(user);
+            return View(userShowVM);
+        }
+
+
         [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult ManagePassword(int id)
