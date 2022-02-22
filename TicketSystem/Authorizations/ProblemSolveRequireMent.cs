@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TicketSystem.Helpers;
 using TicketSystem.Services;
 
 namespace TicketSystem.Authorizations
@@ -50,10 +51,11 @@ namespace TicketSystem.Authorizations
                 }
                 errorMessage = $"只有RD可以解決{categoryName}類型的問題";
             }
+            string html = errorMessage.WriteHtml();
             HttpResponse response = _accessor.HttpContext.Response;
-            byte[] bytes = Encoding.UTF8.GetBytes(errorMessage);
+            byte[] bytes = Encoding.UTF8.GetBytes(html);
             response.StatusCode = 405;
-            response.ContentType = "application/json";
+            response.ContentType = "text/html";
             await response.Body.WriteAsync(bytes, 0, bytes.Length);
             return;
         }

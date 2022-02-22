@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using TicketSystem.Services;
 using Microsoft.EntityFrameworkCore;
 using System.Text;
+using TicketSystem.Helpers;
 
 namespace TicketSystem.Authorizations
 {
@@ -49,13 +50,17 @@ namespace TicketSystem.Authorizations
                 }
                 else
                     errorMessage = $"只有QA能新增{categoryName}的問題";
-            }           
+            }
+            string html = errorMessage.WriteHtml();
+
             HttpResponse response = _accessor.HttpContext.Response;
-            byte[] bytes = Encoding.UTF8.GetBytes(errorMessage);
+            byte[] bytes = Encoding.UTF8.GetBytes(html);
             response.StatusCode = 405;
-            response.ContentType = "application/json";
+            response.ContentType = "text/html";
             await response.Body.WriteAsync(bytes, 0, bytes.Length);
+            //await response.Body.FlushAsync();
             return;
         }
-    }
+
+    } 
 }

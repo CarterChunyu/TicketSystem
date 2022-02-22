@@ -46,7 +46,7 @@ namespace TicketSystem.Services
                  .Include(p => p.Priority).Include(p => p.Severity).Where(p => p.isSolved == isSolved);
             if (CategoryName != "All")
                 problems = problems.Where(p => p.ProblemCategory.Name == CategoryName);
-            return problems;              
+            return problems.OrderBy(p => p.ProblemCategory.Name).ThenBy(p=>p.Id);              
         }
         public async Task<bool> IsSummaryExistedAsync(string summary)
         {

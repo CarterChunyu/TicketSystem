@@ -155,8 +155,7 @@ namespace TicketSystem.Controllers
             problems = problems.GetPages(page_count, page);
 
             IEnumerable<ProblemShowVM> problemShowVMs = _mapper.
-                Map<IEnumerable<Problem>,IEnumerable<ProblemShowVM>>(problems);
-            problemShowVMs = problemShowVMs.OrderBy(p => p.ProblemCategory.Name);
+                Map<IEnumerable<Problem>,IEnumerable<ProblemShowVM>>(problems);   
 
             ViewData["pages"] = pages;
             ViewData["status"] = status;
